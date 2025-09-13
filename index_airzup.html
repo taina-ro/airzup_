@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Airzup - Seu sonho, nosso destino</title>
+    <style>
+        /* Reset e estilos globais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: -1;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+
+        .cta-button {
+            background: #2563eb;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background: #1d4ed8;
+        }
+
+        /* Seção de Pacotes */
+        .packages {
+            padding: 80px 0;
+            background: #f9fafb;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            color: #1f2937;
+        }
+
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        /* Card flip container */
+        .package-card {
+            perspective: 1000px;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            background: white;
+        }
+
+        .package-card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            backface-visibility: hidden;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+            box-sizing: border-box;
+            background: white;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-front {
+            /* front side styles */
+        }
+
+        .card-back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: rotateY(180deg);
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .package-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            flex-shrink: 0;
+        }
+
+        .package-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .package-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .package-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #1f2937;
+        }
+
+        .package-tag {
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .package-description {
+            color: #6b7280;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .package-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .package-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .details-button {
+            background: #2563eb;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .details-button:hover {
+            background: #1d4ed8;
+        }
+
+        .whatsapp-button {
+            background: #22c55e;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            align-self: center;
+            margin-top: 20px;
+            max-width: 100%;
+        }
+
+        .whatsapp-button:hover {
+            background: #16a34a;
+        }
+
+        /* Seção Sobre Nós */
+        .about {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            color: #6b7280;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        .contact-form {
+            background: #f9fafb;
+            padding: 40px;
+            border-radius: 12px;
+            margin-top: 40px;
+        }
+
+        .contact-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #1f2937;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            resize: vertical;
+            min-height: 120px;
+            font-family: inherit;
+            margin-bottom: 20px;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .footer-content p {
+            margin-bottom: 10px;
+        }
+
+        .footer-email {
+            color: #9ca3af;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content p {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .packages-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            .contact-form {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header com imagem principal -->
+    <header class="hero">
+        <img 
+            src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/d6b97a9b-61c0-4ebb-a64f-ed684b2e91f9.png" 
+            alt="Paisagem deslumbrante de uma praia tropical com águas cristalinas e coqueiros, com montanhas ao fundo durante o pôr do sol"
+            class="hero-image"
+        />
+        <div class="hero-overlay"></div>
+        <div class="hero-content container">
+            <h1>Airzup</h1>
+            <p>Descubra os destinos mais incríveis com os melhores pacotes personalizados</p>
+            <button class="cta-button" onclick="scrollToPackages()">Ver Pacotes</button>
+        </div>
+    </header>
+
+    <!-- Seção de Pacotes -->
+    <section id="packages" class="packages">
+        <div class="container">
+            <h2 class="section-title">Nossos Pacotes em Destaque</h2>
+            
+            <div class="packages-grid">
+                <!-- Pacote 1 -->
+                <div class="package-card">
+                    <div class="card-inner">
+                        <!-- Frente -->
+                        <div class="card-front">
+                            <img 
+                                src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/85c6c6b6-f7d0-4bbc-82b0-b6473b525c15.png" 
+                                alt="Praia tropical com areia branca, mar azul turquesa e cadeiras de praia sob coqueiros em dia ensolarado"
+                                class="package-image"
+                            />
+                            <div class="package-content">
+                                <div class="package-header">
+                                    <h3 class="package-title">Pacote Praia Paradise</h3>
+                                    <span class="package-tag">Nordeste</span>
+                                </div>
+                                <p class="package-description">
+                                    7 dias em resort all-inclusive nas melhores praias do Brasil
+                                </p>
+                                <div class="package-footer">
+                                    <span class="package-price">R$ 2.499</span>
+                                    <button class="details-button">Saiba Mais</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Verso -->
+                        <div class="card-back">
+                            <div class="package-content">
+                                <h3>Detalhes do Pacote Praia Paradise</h3>
+                                <p>Inclui passeios de barco, jantar especial na praia, e transporte aeroporto-resort.</p>
+                                <button class="whatsapp-button back-wpp-button" data-package="Praia Paradise" data-price="R$ 2.499">
+                                    📱 Chamar no WhatsApp
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pacote 2 -->
+                <div class="package-card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <img 
+                                src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/57fe4763-3e0d-49fe-afdd-23ae2ad3dade.png" 
+                                alt="Vista panorâmica da Torre Eiffel em Paris com arquitetura europeia clássica e céu azul com nuvens brancas"
+                                class="package-image"
+                            />
+                            <div class="package-content">
+                                <div class="package-header">
+                                    <h3 class="package-title">Europa Clássica</h3>
+                                    <span class="package-tag">Europa</span>
+                                </div>
+                                <p class="package-description">
+                                    Roteiro por Paris, Roma e Barcelona com guia especializado
+                                </p>
+                                <div class="package-footer">
+                                    <span class="package-price">R$ 8.999</span>
+                                    <button class="details-button">Saiba Mais</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <div class="package-content">
+                                <h3>Detalhes do Pacote Europa Clássica</h3>
+                                <p>Visitas guiadas, hospedagem 4 estrelas, e transporte entre cidades incluído.</p>
+                                <button class="whatsapp-button back-wpp-button" data-package="Europa Clássica" data-price="R$ 8.999">
+                                    📱 Chamar no WhatsApp
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pacote 3 -->
+                <div class="package-card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <img 
+                                src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/07b18737-9e55-45b7-ac19-6e201c62ec52.png" 
+                                alt="Floresta amazônica exuberante com rio sinuoso, vegetação densa e vida selvagem em ambiente natural preservado"
+                                class="package-image"
+                            />
+                            <div class="package-content">
+                                <div class="package-header">
+                                    <h3 class="package-title">Aventura na Natureza</h3>
+                                    <span class="package-tag">Amazônia</span>
+                                </div>
+                                <p class="package-description">
+                                    Trilhas, cachoeiras e ecoturismo na Amazônia
+                                </p>
+                                <div class="package-footer">
+                                    <span class="package-price">R$ 1.899</span>
+                                    <button class="details-button">Saiba Mais</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <div class="package-content">
+                                <h3>Detalhes do Pacote Aventura na Natureza</h3>
+                                <p>Guias especializados, equipamentos inclusos, e hospedagem em lodge ecológico.</p>
+                                <button class="whatsapp-button back-wpp-button" data-package="Aventura na Natureza" data-price="R$ 1.899">
+                                    📱 Chamar no WhatsApp
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Sobre Nós -->
+    <section class="about">
+        <div class="container">
+            <div class="about-content">
+                <h2 class="section-title">Sobre Nós</h2>
+                <p class="about-text">
+                    Somos uma agência de viagens apaixonada por criar experiências únicas e memoráveis. 
+                    Com mais de 10 anos no mercado, oferecemos pacotes personalizados para os destinos 
+                    mais incríveis do mundo. Nossa equipe especializada está pronta para transformar 
+                    seus sonhos em realidade.
+                </p>
+                <p class="about-text">
+                    Desde viagens românticas até aventuras radicais, temos o pacote perfeito para 
+                    cada tipo de viajante. Qualidade, segurança e satisfação são nossos principais 
+                    compromissos.
+                </p>
+                
+                <!-- Formulário de contato WhatsApp -->
+                <div class="contact-form">
+                    <h3 class="contact-title">Entre em Contato</h3>
+                    <textarea 
+                        id="whatsappMessage" 
+                        placeholder="Digite sua mensagem para o WhatsApp..."
+                    >Olá! Gostaria de saber mais sobre os pacotes de viagem.</textarea>
+                    <button class="whatsapp-button" onclick="openWhatsApp()">
+                        💬 Conversar no WhatsApp
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <p>✈️ Airzup - Sua Agência de Viagens de Confiança</p>
+            <p class="footer-email">© 2024 Todos os direitos reservados. | contato@airzup.com.br</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        function scrollToPackages() {
+            document.getElementById('packages').scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        // Número do WhatsApp
+        const phone = '5534998370212';
+
+        // Adiciona eventos aos botões "Saiba Mais"
+        document.querySelectorAll('.details-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const card = button.closest('.package-card');
+                card.classList.add('flipped');
+            });
+        });
+
+        // Adiciona eventos aos botões "Chamar no WhatsApp" no verso
+        document.querySelectorAll('.back-wpp-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const card = button.closest('.package-card');
+                const packageName = button.getAttribute('data-package');
+                const packagePrice = button.getAttribute('data-price');
+                const message = `Olá! Gostaria de saber mais sobre o pacote "${packageName}" que custa ${packagePrice}.`;
+
+                const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+                window.open(url, '_blank');
+
+                // Voltar o cartão para a frente
+                card.classList.remove('flipped');
+            });
+        });
+
+        // Função openWhatsApp original (para o formulário)
+        function openWhatsApp() {
+            const message = document.getElementById('whatsappMessage').value;
+            const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+        }
+    </script>
+
+</body>
+</html>
